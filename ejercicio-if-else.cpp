@@ -1,48 +1,87 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 int main(void)
 {
     cout << "CALCULADORA EN C++" << endl << endl;
-    double num1, num2;
-    char operacion;
     string usuario;
+    const string usuarioTrue = "1234";
+    int intentos = 0;
+    bool guardado = false;
 
-    while(usuario != "0000")
-    {
+    while (intentos < 3){
         cout << "Ingrese su usuario: ";
         cin >> usuario;
-        if(usuario == "0000")
+        intentos++;
+        if (usuario == usuarioTrue){
+            guardado = true;
             break;
+        }
+        else{
+            cout << "Usuario incorrecto. Intentos restantes: " << (3 - intentos) << endl;
+        }
+    }
 
-        cout << "Hola, " << usuario << ". CALCULADORA." << endl << endl;
+    if (!guardado){
+        cout << "Intentos agotados. Saliendo del programa" << endl;
+        return 0;
+    }
+
+    int opcion = 0;
+    double num1 = 0, num2 = 0;
+
+    do{
+        cout << endl << "Hola, " << usuario << ". CALCULADORA." << endl;
+        cout << "Menu:" << endl;
+        cout << "1- Sumar" << endl;
+        cout << "2- Restar" << endl;
+        cout << "3- Multiplicar" << endl;
+        cout << "4- Dividir" << endl;
+        cout << "5- Salir" << endl;
+        cout << "Ingrese la opcion: ";
+
+        if (!(cin >> opcion)){
+            cout << "Entrada invalida. Intente de nuevo." << endl;
+        }
+
+        if (opcion == 5){
+            cout << "Saliste de la calculadora." << endl;
+            break;
+        }
 
         cout << "Ingrese el primer numero: ";
-        cin >> num1;
-        cout << "Ingrese el segundo numero: ";
-        cin >> num2;
-
-        cout << "Ingrese la operacion (1 = Sumar, 2 = Restar, 3 = Multiplicar, 4 = Dividir, 5 = Salir): ";
-        cin >> operacion;
-
-        if(operacion == '1')
-            cout << "Resultado: " << num1 + num2 << endl;
-        else if(operacion == '2')
-            cout << "Resultado: " << num1 - num2 << endl;
-        else if(operacion == '3')
-            cout << "Resultado: " << num1 * num2 << endl;
-        else if(operacion == '4')
-        {
-            if(num2 != 0)
-                cout << "Resultado: " << num1 / num2 << endl;
-            else
-                cout << "No es posible dividir entre cero" << endl;
+        while (!(cin >> num1)){
+            cout << "Entrada invalida. Ingrese un numero: ";
         }
-        else
-            cout << "Saliste de la calculadora." << endl;
 
-        cout << endl;
-    }
+        cout << "Ingrese el segundo numero: ";
+        while (!(cin >> num2)){
+            cout << "Entrada invalida. Ingrese un numero: ";
+        }
+
+        switch (opcion){
+            case 1:
+                cout << "Resultado: " << num1 + num2 << endl;
+                break;
+            case 2:
+                cout << "Resultado: " << num1 - num2 << endl;
+                break;
+            case 3:
+                cout << "Resultado: " << num1 * num2 << endl;
+                break;
+            case 4:
+                if (num2 != 0)
+                    cout << "Resultado: " << num1 / num2 << endl;
+                else
+                    cout << "No es posible dividir entre cero" << endl;
+                break;
+            default:
+                cout << "Opcion no valida." << endl;
+                break;
+        }
+
+    } while (opcion != 5);
 
     return 0;
 }
